@@ -28,3 +28,13 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules (Lantern)
+
+- Chat data access goes through the browser Supabase client with RLS; membership checks use the `is_member` security-definer function to avoid recursive policies.
+- Creating DMs/groups, adding members, leaving and listing conversations go through security-definer RPCs (`get_or_create_dm`, `create_group`, `add_group_members`, `leave_conversation`, `list_my_conversations`) because members rows have no client INSERT policy.
+- DMs are de-duplicated by `conversations.dm_key` (sorted user-id pair) so two friends always share one thread.
+- Chat photos live in the private `chat-photos` bucket under `<conversation_id>/<file>`; storage policies key off that first folder, and the UI reads them with signed URLs.
+- One realtime channel lives in the `/chats` layout and patches the React Query cache; don't add per-thread subscriptions.
+- Theme is a `dark` class on `<html>`, set before paint by `themeBootScript` in `__root.tsx` and read via `useTheme()` (useSyncExternalStore) so every toggle stays in sync.
+- Invite links are `/add/<username>`; post-sign-in redirects must pass `safeRedirect` (same-origin relative paths only).

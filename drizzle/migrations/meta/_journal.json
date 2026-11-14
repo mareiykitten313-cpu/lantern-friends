@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794630628072,
+      "tag": "0000_lantern_chat_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794630652392,
+      "tag": "0001_chat_photos_policies",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794630873338,
+      "tag": "0002_username_taken_check",
+      "breakpoints": true
+    }
+  ]
+}
